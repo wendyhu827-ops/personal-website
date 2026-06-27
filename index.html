@@ -181,58 +181,20 @@
     margin-bottom:48px;
   }
 
-  /* ABOUT */
-  #about{background:var(--paper);}
-  .about-grid{
-    display:grid;
-    grid-template-columns:1.1fr 1fr;
-    gap:56px;
-    align-items:start;
-  }
-  .about-portrait{
-    width:100%;
-    aspect-ratio:4/5;
-    border-radius:24px;
-    background:linear-gradient(150deg, var(--clay), var(--terracotta));
-    position:relative;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:0 24px 50px -20px rgba(160,82,47,0.4);
-  }
-  .about-portrait::before{
-    content:"";
-    position:absolute;
-    inset:14px;
-    border:1.5px dashed rgba(255,250,242,0.6);
-    border-radius:18px;
-  }
-  .about-portrait span{
-    font-family:'Fraunces', serif;
-    font-size:5.5rem;
-    color:rgba(255,250,242,0.9);
-    font-weight:700;
-  }
-  .about-text p{
-    margin:0 0 20px;
+  /* JOURNEY (About + Experience merged into an animated flight-path timeline) */
+  #journey{background:var(--paper);overflow:visible;}
+  .journey-intro{
+    max-width:680px;
+    margin:0 0 60px;
     color:var(--ink-soft);
-    font-size:1.03rem;
+    font-size:1.05rem;
   }
-  .about-text strong{color:var(--ink);font-weight:700;}
-  .highlight-bar{
-    border-left:3px solid var(--terracotta);
-    padding-left:18px;
-    margin:28px 0;
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-size:1.15rem;
-    color:var(--terracotta-dark);
-  }
+  .journey-intro strong{color:var(--ink);font-weight:700;}
   .tags-row{
     display:flex;
     flex-wrap:wrap;
     gap:10px;
-    margin-top:24px;
+    margin-top:20px;
   }
   .tag-pill{
     background:var(--cream-2);
@@ -244,79 +206,99 @@
     font-weight:600;
   }
 
-  /* EXPERIENCE */
-  #experience{background:var(--cream);}
-  .timeline{
+  .journey-track{
     position:relative;
-    margin-top:10px;
   }
-  .timeline::before{
-    content:"";
+  .flight-svg{
     position:absolute;
-    left:18px;
-    top:6px;
-    bottom:6px;
-    width:2px;
-    background:repeating-linear-gradient(to bottom, var(--terracotta) 0 6px, transparent 6px 12px);
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    z-index:1;
+    overflow:visible;
   }
-  .timeline-item{
+  .flight-svg path.path-dashed{
+    fill:none;
+    stroke:var(--clay);
+    stroke-width:2.5;
+    stroke-dasharray:2 14;
+    stroke-linecap:round;
+    opacity:0.7;
+  }
+  .plane-icon{
+    position:absolute;
+    top:0; left:0;
+    font-size:1.7rem;
+    z-index:3;
+    transform-origin:center;
+    filter:drop-shadow(0 4px 6px rgba(58,47,40,0.25));
+    will-change:transform;
+  }
+
+  .journey-node{
     position:relative;
-    padding-left:56px;
-    margin-bottom:38px;
+    z-index:2;
+    display:grid;
+    grid-template-columns:1fr 64px 1fr;
+    align-items:center;
+    margin-bottom:64px;
   }
-  .timeline-item::before{
-    content:"";
-    position:absolute;
-    left:10px;
-    top:4px;
-    width:18px;
-    height:18px;
+  .journey-node .node-dot{
+    grid-column:2;
+    width:20px;
+    height:20px;
     border-radius:50%;
     background:var(--paper);
     border:3px solid var(--terracotta);
+    margin:0 auto;
+    position:relative;
+    z-index:2;
   }
-  .timeline-item .role-row{
-    display:flex;
-    flex-wrap:wrap;
-    align-items:baseline;
-    gap:10px;
-    margin-bottom:6px;
-  }
-  .timeline-item h3{
-    font-size:1.18rem;
-  }
-  .timeline-item .org{
-    font-weight:700;
-    color:var(--terracotta-dark);
-  }
-  .timeline-item .period{
-    font-size:0.85rem;
-    color:var(--ink-soft);
-    background:var(--cream-2);
-    padding:3px 12px;
-    border-radius:20px;
-  }
-  .timeline-item p{
-    color:var(--ink-soft);
-    margin:0;
-    max-width:640px;
-  }
-  .subsection-label{
-    font-family:'Fraunces', serif;
-    font-style:italic;
-    font-size:1.3rem;
-    color:var(--olive);
-    margin:50px 0 26px;
-  }
-  .project-card{
-    background:var(--paper);
+  .journey-node.type-education .node-dot{border-color:var(--olive);}
+  .journey-node.type-project .node-dot{border-color:var(--gold);}
+  .journey-node.type-travel .node-dot{border-color:var(--clay);}
+
+  .node-card{
+    grid-column:1;
+    background:var(--cream);
     border:1px solid var(--line);
     border-radius:18px;
-    padding:24px 26px;
-    margin-bottom:18px;
+    padding:22px 26px;
+    justify-self:end;
+    max-width:420px;
+    transition:transform 0.25s ease, box-shadow 0.25s ease;
   }
-  .project-card h3{font-size:1.05rem;margin-bottom:8px;color:var(--terracotta-dark);}
-  .project-card p{margin:0;color:var(--ink-soft);}
+  .journey-node:nth-child(even) .node-card{
+    grid-column:3;
+    justify-self:start;
+  }
+  .node-card:hover{transform:translateY(-4px);box-shadow:0 16px 30px -16px rgba(58,47,40,0.2);}
+  .node-tag{
+    display:inline-block;
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:700;
+    font-size:0.85rem;
+    color:var(--terracotta-dark);
+    background:var(--cream-2);
+    padding:3px 13px;
+    border-radius:20px;
+    margin-bottom:10px;
+    transform:rotate(-1.5deg);
+  }
+  .node-card .node-icon{font-size:1.4rem;margin-right:8px;}
+  .node-card h3{font-size:1.1rem;display:inline;}
+  .node-card .org{
+    display:block;
+    font-weight:700;
+    color:var(--terracotta-dark);
+    margin:4px 0 8px;
+    font-size:0.95rem;
+  }
+  .node-card p{margin:0;color:var(--ink-soft);font-size:0.95rem;}
+  .node-card ul{margin:8px 0 0;padding-left:18px;color:var(--ink-soft);font-size:0.92rem;}
+  .node-card li{margin-bottom:4px;}
 
   /* ADVENTURES */
   #adventures{background:var(--paper);}
@@ -420,10 +402,17 @@
     }
     nav ul.open{transform:translateX(0);}
     .nav-toggle{display:block;}
-    .about-grid{grid-template-columns:1fr;}
-    .about-portrait{max-width:280px;margin:0 auto;}
     .adv-grid{grid-template-columns:1fr;}
     section{padding:90px 0 70px;}
+
+    .journey-node{grid-template-columns:36px 1fr;margin-bottom:40px;}
+    .journey-node .node-dot{grid-column:1;margin:0;}
+    .node-card, .journey-node:nth-child(even) .node-card{
+      grid-column:2;
+      justify-self:stretch;
+      max-width:none;
+    }
+    .plane-icon{font-size:1.4rem;}
   }
 </style>
 </head>
@@ -434,8 +423,7 @@
     <div class="logo">Wendy HU</div>
     <button class="nav-toggle" id="navToggle" aria-label="menu">☰</button>
     <ul id="navMenu">
-      <li><a href="#about">About</a></li>
-      <li><a href="#experience">Experience</a></li>
+      <li><a href="#journey">Journey</a></li>
       <li><a href="#adventures">Adventures</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -456,92 +444,110 @@
   <div class="scroll-cue">SCROLL ↓</div>
 </section>
 
-<section id="about">
+<section id="journey">
   <div class="container">
-    <span class="section-tag">关于我</span>
-    <h2 class="section-title fade-up">About Me</h2>
-    <div class="about-grid">
-      <div class="about-portrait fade-up"><span>W</span></div>
-      <div class="about-text fade-up">
-        <p>我本科就读于<strong>香港中文大学（深圳）金融学专业</strong>，曾交流至<strong>加州大学伯克利分校哈斯商学院</strong>。</p>
-        <p>做过<strong>数据分析师</strong>（滴滴、快手），在数字里寻找趋势和洞察的过程让我着迷——但我渐渐发现，分析只能停留在"看见问题"，没法真正把想法落地成产品。</p>
-        <div class="highlight-bar">"于是我转向了运营，想离'落地'更近一些。"</div>
-        <p>现在我在<strong>数美万物</strong>（AI生图 + 潮玩公司）做<strong>商品运营</strong>，负责 BJD 等品类的开品与 GTM 全流程——从市场调研、选品，到跨部门协同，最终把产品推向市场。</p>
-        <p>在这个过程中，我发现 AI 时代即使没有编程背景，也能把一个想法变成真正的产品。这让我想成为一名 <strong>AI 产品经理</strong>，把"发现趋势 → 落地产品"这条路走得更完整。</p>
-        <p>Gap Year 期间，我游历了 <strong>14 个国家</strong>，做过全球志愿者，也住过数字游民社区。我相信，多元的视角，才能做出更好的产品。</p>
-        <div class="tags-row">
-          <span class="tag-pill">数据分析</span>
-          <span class="tag-pill">商品运营 / GTM</span>
-          <span class="tag-pill">AI Product</span>
-          <span class="tag-pill">跨文化视角</span>
-          <span class="tag-pill">14 国旅行者</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+    <span class="section-tag">我的旅程</span>
+    <h2 class="section-title fade-up">Journey</h2>
+    <p class="journey-intro fade-up">从港中深的金融课堂，到滴滴、快手的数据看板，再到数美万物的开品一线——中间还有一年按下暂停键，飞向 14 个国家。<strong>数据 × 运营 × 世界</strong>，拼成了我现在想成为 AI 产品经理的样子。</p>
 
-<section id="experience">
-  <div class="container">
-    <span class="section-tag">经历</span>
-    <h2 class="section-title fade-up">Experience</h2>
+    <div class="journey-track" id="journeyTrack">
+      <svg class="flight-svg" id="flightSvg">
+        <path class="path-dashed" id="pathDashed" d=""></path>
+      </svg>
+      <div class="plane-icon" id="planeIcon">✈️</div>
 
-    <div class="timeline">
-      <div class="timeline-item fade-up">
-        <div class="role-row">
-          <h3>数据分析师</h3>
-          <span class="org">@ 滴滴</span>
-          <span class="period">2025.07 – 至今</span>
+      <div class="journey-node type-education fade-up">
+        <div class="node-card">
+          <span class="node-tag">教育背景</span><br>
+          <span class="node-icon">🎓</span><h3>金融学本科</h3>
+          <span class="org">香港中文大学（深圳） · 交流于加州大学伯克利分校哈斯商学院</span>
+          <p>金融视角打底，也是我第一次跳出单一文化环境思考问题的起点。</p>
         </div>
-        <p>负责国际化用户体验分析，设计 CSAT 监控指标体系。</p>
+        <div class="node-dot"></div>
       </div>
 
-      <div class="timeline-item fade-up">
-        <div class="role-row">
-          <h3>商品运营</h3>
-          <span class="org">@ 数美万物</span>
-          <span class="period">现在</span>
+      <div class="journey-node type-project fade-up">
+        <div class="node-card">
+          <span class="node-tag">2022</span><br>
+          <span class="node-icon">🏆</span><h3>欧莱雅 BRANDSTORM</h3>
+          <span class="org">中国大陆区第一名</span>
+          <p>设计美妆工具干洗装置，第一次体验"想法 → 产品"的完整闭环。</p>
         </div>
-        <p>AI 生图 + 潮玩公司，负责 BJD 等品类开品与 GTM 全流程，从市场调研选品到跨部门协同最终推向市场。</p>
+        <div class="node-dot"></div>
       </div>
 
-      <div class="timeline-item fade-up">
-        <div class="role-row">
-          <h3>数据分析实习生</h3>
-          <span class="org">@ 快手科技</span>
-          <span class="period">2024.10 – 2025.02</span>
-        </div>
-        <p>参与广告投放策略优化。</p>
-      </div>
-
-      <div class="timeline-item fade-up">
-        <div class="role-row">
-          <h3>策略运营实习生</h3>
-          <span class="org">@ 字节跳动 TikTok</span>
-          <span class="period">2024.01 – 2024.07</span>
-        </div>
-        <p>负责商城运营与直播产品优化。</p>
-      </div>
-
-      <div class="timeline-item fade-up">
-        <div class="role-row">
-          <h3>商业分析师</h3>
+      <div class="journey-node fade-up">
+        <div class="node-card">
+          <span class="node-tag">2023.07 – 2024.01</span><br>
+          <span class="node-icon">📊</span><h3>商业分析师</h3>
           <span class="org">@ COGNO 科技</span>
-          <span class="period">2023.07 – 2024.01</span>
+          <p>AI 插件初创团队，负责市场与竞品分析。</p>
         </div>
-        <p>AI 插件初创团队，负责市场与竞品分析。</p>
+        <div class="node-dot"></div>
+      </div>
+
+      <div class="journey-node fade-up">
+        <div class="node-card">
+          <span class="node-tag">2024.01 – 2024.07</span><br>
+          <span class="node-icon">🛍️</span><h3>策略运营实习生</h3>
+          <span class="org">@ 字节跳动 TikTok</span>
+          <p>负责商城运营与直播产品优化。</p>
+        </div>
+        <div class="node-dot"></div>
+      </div>
+
+      <div class="journey-node type-travel fade-up">
+        <div class="node-card">
+          <span class="node-tag">2024.06 – 2025.01</span><br>
+          <span class="node-icon">🌍</span><h3>Gap Year：按下暂停键</h3>
+          <span class="org">14 个国家 · 全球志愿者 · 数字游民</span>
+          <p>大三放弃直接申研，用半年多的时间游历世界。</p>
+          <ul>
+            <li>🇦🇿 阿塞拜疆：两个月全球志愿者，教英语口语，策划世界美食交换活动</li>
+            <li>🏔️ 大理 NCC：策划"你今天用 emoji 了吗"展览</li>
+            <li>🏆 挪威卑尔根 NHH 商赛：唯一亚洲队伍，24 小时方案获小组第二</li>
+          </ul>
+        </div>
+        <div class="node-dot"></div>
+      </div>
+
+      <div class="journey-node fade-up">
+        <div class="node-card">
+          <span class="node-tag">2024.10 – 2025.02</span><br>
+          <span class="node-icon">📈</span><h3>数据分析实习生</h3>
+          <span class="org">@ 快手科技</span>
+          <p>参与广告投放策略优化。</p>
+        </div>
+        <div class="node-dot"></div>
+      </div>
+
+      <div class="journey-node fade-up">
+        <div class="node-card">
+          <span class="node-tag">2025.07 – 至今</span><br>
+          <span class="node-icon">📉</span><h3>数据分析师</h3>
+          <span class="org">@ 滴滴</span>
+          <p>负责国际化用户体验分析，设计 CSAT 监控指标体系。</p>
+        </div>
+        <div class="node-dot"></div>
+      </div>
+
+      <div class="journey-node fade-up">
+        <div class="node-card">
+          <span class="node-tag">现在</span><br>
+          <span class="node-icon">🧩</span><h3>商品运营</h3>
+          <span class="org">@ 数美万物（AI生图 + 潮玩）</span>
+          <p>负责 BJD 等品类开品与 GTM 全流程，从市场调研选品到跨部门协同最终推向市场。下一步：AI 产品经理。</p>
+        </div>
+        <div class="node-dot"></div>
       </div>
     </div>
 
-    <div class="subsection-label fade-up">项目经历 ✦ Projects</div>
-
-    <div class="project-card fade-up">
-      <h3>挪威 NHH 全球商业案例大赛</h3>
-      <p>作为大赛唯一的亚洲队伍，在 24 小时内为 Rema1000 设计可持续发展战略，获小组第二名。</p>
-    </div>
-    <div class="project-card fade-up">
-      <h3>欧莱雅 BRANDSTORM 2022</h3>
-      <p>设计美妆工具干洗装置，获中国大陆区第一名。</p>
+    <div class="tags-row fade-up">
+      <span class="tag-pill">数据分析</span>
+      <span class="tag-pill">商品运营 / GTM</span>
+      <span class="tag-pill">AI Product</span>
+      <span class="tag-pill">跨文化视角</span>
+      <span class="tag-pill">14 国旅行者</span>
     </div>
   </div>
 </section>
@@ -614,6 +620,80 @@
     });
   }, { threshold: 0.15 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // flight-path timeline: build a smooth path through each node's dot,
+  // then move the plane along that same path as the user scrolls.
+  const track = document.getElementById('journeyTrack');
+  const svg = document.getElementById('flightSvg');
+  const pathDashed = document.getElementById('pathDashed');
+  const plane = document.getElementById('planeIcon');
+  let pathLength = 0;
+
+  function smoothPathD(points){
+    if (points.length < 2) return '';
+    let d = `M ${points[0].x} ${points[0].y}`;
+    for (let i = 0; i < points.length - 1; i++){
+      const p0 = points[i === 0 ? i : i - 1];
+      const p1 = points[i];
+      const p2 = points[i + 1];
+      const p3 = points[i + 2 < points.length ? i + 2 : i + 1];
+      const cp1x = p1.x + (p2.x - p0.x) / 6;
+      const cp1y = p1.y + (p2.y - p0.y) / 6;
+      const cp2x = p2.x - (p3.x - p1.x) / 6;
+      const cp2y = p2.y - (p3.y - p1.y) / 6;
+      d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
+    }
+    return d;
+  }
+
+  function buildPath(){
+    const trackRect = track.getBoundingClientRect();
+    svg.setAttribute('viewBox', `0 0 ${trackRect.width} ${trackRect.height}`);
+    svg.style.height = trackRect.height + 'px';
+
+    const dots = track.querySelectorAll('.node-dot');
+    const points = Array.from(dots).map(dot => {
+      const r = dot.getBoundingClientRect();
+      return {
+        x: r.left + r.width / 2 - trackRect.left,
+        y: r.top + r.height / 2 - trackRect.top
+      };
+    });
+
+    const d = smoothPathD(points);
+    pathDashed.setAttribute('d', d);
+    pathLength = pathDashed.getTotalLength();
+  }
+
+  function updatePlane(){
+    if (!pathLength) return;
+    const trackRect = track.getBoundingClientRect();
+    const vh = window.innerHeight;
+    let progress = (vh * 0.45 - trackRect.top) / trackRect.height;
+    progress = Math.max(0, Math.min(1, progress));
+
+    const dist = progress * pathLength;
+    const point = pathDashed.getPointAtLength(dist);
+    const ahead = pathDashed.getPointAtLength(Math.min(pathLength, dist + 1));
+    const angle = Math.atan2(ahead.y - point.y, ahead.x - point.x) * 180 / Math.PI;
+
+    plane.style.transform = `translate(${point.x - 14}px, ${point.y - 14}px) rotate(${angle + 90}deg)`;
+    plane.style.opacity = (progress > 0 && progress < 1) ? '1' : '0.6';
+  }
+
+  let ticking = false;
+  function onScroll(){
+    if (!ticking){
+      requestAnimationFrame(() => { updatePlane(); ticking = false; });
+      ticking = true;
+    }
+  }
+
+  window.addEventListener('load', () => { buildPath(); updatePlane(); });
+  window.addEventListener('resize', () => { buildPath(); updatePlane(); });
+  window.addEventListener('scroll', onScroll, { passive: true });
+  buildPath();
+  updatePlane();
 </script>
 
 </body>
